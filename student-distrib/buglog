@@ -1,0 +1,231 @@
+Bug #: 1  
+Problem: initializing IDT handler causes double fault  
+Solution: initialize PIC before testing
+Fixed By: Ashish--  
+Date: 3/10/17  
+Time Taken:  
+  
+Bug #: 2  
+Problem: runtime error when enabling paging  
+Solution: turn on PSE for 4 MB page before enabling paging
+Fixed By: Charlie  
+Date: 3/10/17  
+Time Taken:  1 hour  
+  
+Bug #: 3  
+Problem:  triple fault when write_rtc is called on  
+Solution:  use same function signature as system calls
+Fixed By: Charlie  
+Date:  3/11/17  
+Time Taken: 3 hours  
+  
+Bug #: 4  
+Problem:  terminal_write printing old data  
+Solution:  clear buffer before copying to buffer
+Fixed By: Charlie  
+Date: 3/25/17
+Time Taken:  2 hours  
+  
+Bug #: 5  
+Problem:  reading program file ends early  
+Solution:  remove EOL detection since programs are not null-terminated
+Fixed By: Charlie  
+Date: 3/25/17  
+Time Taken:  3 hours  
+  
+Bug #: 6  
+Problem:  terminal_write with full buffer produces unknown character at end  
+Solution:  pass in number of bytes to print for terminal_write instead of using '\0' detection  
+Fixed By: Ryan
+Date: 3/26/17
+Time Taken: 15 mins
+  
+Bug #: 7  
+Problem:  cannot read large file names  
+Solution:  perform file name size check and only print up to 32 characters  
+Fixed By: Charlie  
+Date: 3/29/17  
+Time Taken:  30 mins  
+
+Bug #: 8  
+Problem:  general protection fault when performing IRET from system call handler  
+Solution:  don't use C-function for system call  
+Fixed By: Charlie  
+Date: 4/13/17  
+Time Taken: 6 hours  
+ 
+Bug #: 9  
+Problem:  EAX holds incorrect value when performing IRET from system call handler  
+Solution:  avoid using printf in system call interrupt handler  
+Fixed By: Charlie  
+Date: 4/13/17
+Time Taken: 6 hours
+
+Bug #:  10
+Problem:  file name read even if only partial name typed  
+Solution: pass in max length for string compare  
+Fixed By: Ryan 
+Date:  4/15/17  
+Time Taken: 30 minutes 
+
+Bug #:  11
+Problem:  terminal new line not being read  
+Solution:  add new line after for loop  
+Fixed By: Charlie  
+Date:  4/15/17  
+Time Taken: 20 minutes  
+
+Bug #:  12
+Problem:   read file not working when going through system call  
+Solution:   update function signature for read file  
+Fixed By: Ashish  
+Date:  4/16/17  
+Time Taken: 1 hour  
+
+Bug #:  13  
+Problem:  read file not working for cat/fish 
+Solution: keep track of file read position inside file descriptor  
+Fixed By: Ryan  
+Date:  4/19/17  
+Time Taken: 45 minutes  
+
+Bug #:  14  
+Problem:  verylargetextwithverylongname.txt not working for read directory  
+Solution: truncate to length of 32 if large since that is max file name length  
+Fixed By: Charlie  
+Date:  4/19/17  
+Time Taken: 1 hour  
+
+Bug #:  15  
+Problem:  PIT executing too frequently  
+Solution: Set PIT divisor value to 100 Hz and implement countdown timer  
+Fixed By: Charlie  
+Date:  4/29/17  
+Time Taken: 1 hour  
+
+Bug #:  16  
+Problem:  The ESP and EBP we were returning to from the halt would page fault during a halt.  
+Solution:  We created a separate ESP and EBP for each program that we would return to during a halt.  
+Fixed By: Ashish, Ryan  
+Date:  4/29/17  
+Time Taken: 30 minutes  
+
+Bug #:  17  
+Problem:  No keyboard interrupts were being received when we changed terminals.  
+Solution:  We had to send an eoi before another program executes.  
+Fixed By: Ashish  
+Date:  4/30/17  
+Time Taken: 1 hour  
+
+Bug #:  18 
+Problem:  Programs would crash after receiving interrupts.  
+Solution:  We had to save and restore flags and registers.  
+Fixed By: Ashish  
+Date:  4/30/17  
+Time Taken: 1 hour  
+
+Bug #:  19    
+Problem:  fish always writes to active terminal   
+Solution:  map to inactive terminal and swap paging address when necessary   
+Fixed By: Anthony, Charlie  
+Date:  5/1/17  
+Time Taken: 3 hrs  
+
+Bug #:  20  
+Problem:  filesystem not working if paging is initialized  
+Solution:  assign module before paging  
+Fixed By: Charlie  
+Date:  4/28/17  
+Time Taken:  6 hours  
+
+Bug #:  21  
+Problem:  PIT frequency not being modified   
+Solution:  send correct command to command port to accept lowbyte followed by hibyte  
+Fixed By: Charlie 
+Date:  4/30/17  
+Time Taken: 2 hrs  
+
+Bug #:  22    
+Problem:  vidmap for fish only printing first character of fish   
+Solution:  fix read file to properly keep track of previous reads   
+Fixed By: Charlie  
+Date:  4/23/17  
+Time Taken: 3 hours  
+
+Bug #:  23  
+Problem:  page fault when initializing paging  
+Solution:  setup video memory address to present  
+Fixed By: Charlie  
+Date:  3/13/17  
+Time Taken: 1 day  
+
+Bug #:  24  
+Problem:  halting program when only one shell exists causes page fault  
+Solution:  initialize all 3 shells during first 3 PIT ticks so shells always active instead of 1 in kernel, and 2 in PIT 
+Fixed By: Anthony  
+Date: 5/1/16  
+Time Taken: 1hr  
+
+Bug #:  25 
+Problem: Page Fault when context switching to saved EIP  
+Solution: Changed method, retrieving EIP from stack instead of a saved EIP  
+Fixed By: Ryan  
+Date: 5/1/16  
+Time Taken: 5hrs  
+
+Bug #:  26  
+Problem: Cursor setting not consistent with current terminal.  
+Solution: Created a new 'putc_input' function that handles only stdin character writing.  
+Fixed By: Ryan  
+Date: 5/1/16  
+Time Taken: 2 hrs  
+
+Bug #:  27  
+Problem: Screen not scrolling correctly with current terminal.  
+Solution: Created a new 'scroll_screen_input' function that handles only stdin scrolling.  
+Fixed By: Ryan  
+Date: 5/1/16  
+Time Taken: 15 min  
+
+Bug #:  28  
+Problem:  no interrupts after context switch    
+Solution:  modify EFLAGS so that interrupts enabled upon IRET    
+Fixed By: Charlie    
+Date: 4/22/17  
+Time Taken: 1 hour  
+
+Bug #:  29  
+Problem:  halting final shell causes page fault   
+Solution:  check if attempting to halt base shell and instead restart the shell   
+Fixed By: Ryan  
+Date:  4/18/17  
+Time Taken: 1 day  
+
+Bug #:  30  
+Problem:  rtc read being received too early   
+Solution:  check for previous interrupt to complete before reading  
+Fixed By: Charlie  
+Date:  3/26/17
+Time Taken: 1 hour  
+
+Bug #:  31  
+Problem:  terminal reading too early   
+Solution:  wait for user to finish typing before processing terminal  
+Fixed By: Ryan  
+Date:  3/26/17  
+Time Taken: 1 hour  
+
+Bug #:  32  
+Problem:  grep causes page fault after multiple execution    
+Solution:  close fd in sys halt  
+Fixed By: Anthony  
+Date:  5/1/17  
+Time Taken: 30 minutes
+
+Bug #:  33  
+Problem:  interrupt eoi wouldn't be processed  
+Solution:  had to sent interrupt to slave and master PIC
+Fixed By: Ashish  
+Date:  3/10/17  
+Time Taken: 30 minutes
+
