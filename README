@@ -34,11 +34,8 @@ README
     This file.
 
 student-distrib/
-    This is the directory that contains the source code for your
-    operating system.  Currently, a skeleton is provided that will build
-    and boot you into protected mode, printing out various boot
-    parameters.  Read the INSTALL file in that directory for
-    instructions on how to set up the bootloader to boot this OS.
+    This is the directory that contains the source code for the
+    operating system.  
 
 syscalls/
     This directory contains a basic system call library that is used by
